@@ -37,7 +37,7 @@ param kind string = 'GlobalDocumentDB'
 resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
   name: accountName
   kind: kind
-  location: solutionLocation
+  location: 'westus2' //solutionLocation, coded to westus2
   tags: tags
   properties: {
     consistencyPolicy: { defaultConsistencyLevel: 'Session' }

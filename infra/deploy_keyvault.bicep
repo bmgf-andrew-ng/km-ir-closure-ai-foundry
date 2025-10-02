@@ -19,6 +19,8 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: keyvaultName
   location: solutionLocation
   properties: {
+    enableSoftDelete: true  // <-- required
+    enablePurgeProtection: true // may also be required
     createMode: 'default'
     accessPolicies: [
       {        
