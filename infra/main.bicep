@@ -18,6 +18,7 @@ param solutionUniqueText string = substring(uniqueString(subscription().id, reso
   'australiaeast'
   'centralus'
   'eastasia'
+  'westus'
   'eastus2'
   'japaneast'
   'northeurope'
@@ -30,7 +31,7 @@ param location string
 
 @minLength(3)
 @description('Optional. Secondary location for databases creation(example:uksouth):')
-param secondaryLocation string = 'uksouth'
+param secondaryLocation string = 'westus'
 
 @allowed([
   'australiaeast'
@@ -109,7 +110,12 @@ param vmAdminUsername string?
 param vmAdminPassword string?
 
 @description('Optional. The tags to apply to all deployed Azure resources.')
-param tags resourceInput<'Microsoft.Resources/resourceGroups@2025-04-01'>.tags = {}
+param tags resourceInput<'Microsoft.Resources/resourceGroups@2025-04-01'>.tags = {
+  application: 'tbd'
+  'cost-center': '10692-enterprise-data-solutions'
+  environment: 'development'
+  owner: 'knowledge-management-and-data-science'
+}
 
 @description('Optional. Enable monitoring applicable resources, aligned with the Well Architected Framework recommendations. This setting enables Application Insights and Log Analytics and configures all the resources applicable resources to send logs. Defaults to false.')
 param enableMonitoring bool = false
@@ -158,6 +164,7 @@ var cosmosDbZoneRedundantHaRegionPairs = {
   australiaeast: 'uksouth' //'southeastasia'
   centralus: 'eastus2'
   eastasia: 'southeastasia'
+  westus2: 'centralus'
   eastus: 'centralus'
   eastus2: 'centralus'
   japaneast: 'australiaeast'
@@ -174,6 +181,7 @@ var replicaRegionPairs = {
   australiaeast: 'australiasoutheast'
   centralus: 'westus'
   eastasia: 'japaneast'
+  westus2: 'centralus'
   eastus: 'centralus'
   eastus2: 'centralus'
   japaneast: 'eastasia'
