@@ -428,7 +428,7 @@ module jumpboxVM 'br/public:avm/res/compute/virtual-machine:0.15.0' = if (enable
   name: take('avm.res.compute.virtual-machine.${jumpboxVmName}', 64)
   params: {
     name: take(jumpboxVmName, 15) // Shorten VM name to 15 characters to avoid Azure limits
-    vmSize: vmSize ?? 'Standard_DS2_v2'
+    vmSize: vmSize ?? 'Standard_DC4s_v2'
     location: solutionLocation
     adminUsername: vmAdminUsername ?? 'JumpboxAdminUser'
     adminPassword: vmAdminPassword ?? 'JumpboxAdminP@ssw0rd1234!'
@@ -437,7 +437,7 @@ module jumpboxVM 'br/public:avm/res/compute/virtual-machine:0.15.0' = if (enable
     imageReference: {
       offer: 'WindowsServer'
       publisher: 'MicrosoftWindowsServer'
-      sku: '2019-datacenter'
+      sku: '2022-datacenter-g2'
       version: 'latest'
     }
     osType: 'Windows'
@@ -447,7 +447,7 @@ module jumpboxVM 'br/public:avm/res/compute/virtual-machine:0.15.0' = if (enable
         storageAccountType: 'Standard_LRS'
       }
     }
-    encryptionAtHost: false // Some Azure subscriptions do not support encryption at host
+    encryptionAtHost: true // Some Azure subscriptions do not support encryption at host
     nicConfigurations: [
       {
         name: 'nic-${jumpboxVmName}'
@@ -880,7 +880,7 @@ module storageAccount 'br/public:avm/res/storage/storage-account:0.20.0' = {
       bypass: 'AzureServices'
       defaultAction: enablePrivateNetworking ? 'Deny' : 'Allow'
     }
-    allowBlobPublicAccess: enablePrivateNetworking ? true : false
+    allowBlobPublicAccess: enablePrivateNetworking ? false : false
     publicNetworkAccess: enablePrivateNetworking ? 'Disabled' : 'Enabled'
     // Private endpoints for blob and queue
     privateEndpoints: enablePrivateNetworking
